@@ -1,6 +1,6 @@
-#include "jsb_cocos2dx_builder_auto.hpp"
-#include "cocos2d_specifics.hpp"
-#include "CocosBuilder.h"
+#include "scripting/js-bindings/auto/jsb_cocos2dx_builder_auto.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "editor-support/cocosbuilder/CocosBuilder.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -17,7 +17,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_cocosbuilder_CCBAnimationManager_class;
 JSObject *jsb_cocosbuilder_CCBAnimationManager_prototype;
@@ -240,7 +240,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceNamedTweenD
         const char* arg0 = nullptr;
         double arg1 = 0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration : Error processing arguments");
         cobj->runAnimationsForSequenceNamedTweenDuration(arg0, arg1);
         args.rval().setUndefined();
@@ -536,7 +536,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceIdTweenDura
         int arg0 = 0;
         double arg1 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceIdTweenDuration : Error processing arguments");
         cobj->runAnimationsForSequenceIdTweenDuration(arg0, arg1);
         args.rval().setUndefined();
@@ -1358,7 +1358,7 @@ bool js_cocos2dx_builder_CCBReader_setResolutionScale(JSContext *cx, uint32_t ar
     bool ok = true;
     if (argc == 1) {
         double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBReader_setResolutionScale : Error processing arguments");
         cocosbuilder::CCBReader::setResolutionScale(arg0);
         args.rval().setUndefined();

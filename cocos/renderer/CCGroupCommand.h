@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -30,7 +30,7 @@
 #include <unordered_map>
 
 #include "base/CCRef.h"
-#include "CCRenderCommand.h"
+#include "renderer/CCRenderCommand.h"
 
 /**
  * @addtogroup renderer

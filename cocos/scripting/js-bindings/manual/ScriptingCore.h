@@ -1,7 +1,7 @@
 /*
  * Created by Rolando Abarca on 3/14/12.
  * Copyright (c) 2012 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,19 +28,19 @@
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-#include "cocos2d.h"
+
 #include "ui/CocosGUI.h"
-#include "js_bindings_config.h"
-#include "js_bindings_core.h"
-#include "spidermonkey_specifics.h"
-#include "js_manual_conversions.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
+#include "scripting/js-bindings/manual/spidermonkey_specifics.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
 #include "mozilla/Maybe.h"
-#include "js-BindingsExport.h"
+#include "scripting/js-bindings/manual/js-BindingsExport.h"
 
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.10"
+#define ENGINE_VERSION "Cocos2d-JS v3.12"
 
 void js_log(const char *format, ...);
 
@@ -85,6 +85,7 @@ private:
     mozilla::Maybe<JS::PersistentRootedObject> _debugGlobal;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
+    bool _needCleanup;
 
     bool _callFromScript;
     ScriptingCore();
@@ -288,7 +289,7 @@ public:
      @param path @~english The script file path
      @return @~english Script object
      */
-    JSScript* getScript(const char *path);
+    JS::PersistentRootedScript* getScript(const char *path);
     
     /**@~english
      * Compile the specified js file
@@ -296,7 +297,7 @@ public:
      * @param global    @~english The js global object
      * @param cx        @~english The js context
      */
-    void compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
+    JS::PersistentRootedScript* compileScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
     
     /**@~english
      * Run the specified js file
@@ -344,7 +345,7 @@ public:
      * Gets the cached script objects for all executed js file
      * @return @~english The cached script object map
      */
-    std::unordered_map<std::string, JSScript*> &getFileScript();
+    std::unordered_map<std::string, JS::PersistentRootedScript*>& getFileScript();
     /**@~english
      * Clean all script objects
      */
@@ -405,7 +406,7 @@ public:
     /**@~english
      * Simulate a multi touch event and dispatch it to a js object.
      * @param eventType @~english The touch event type
-     * @param touches @~english Touchs list for multitouch
+     * @param touches @~english Touches list for multitouch
      * @param obj @~english The js object
      * @return @~english Return 1 if succeed, otherwise return 0.
      */
@@ -547,7 +548,7 @@ public:
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event);
     bool handleMouseEvent(void* nativeObj, cocos2d::EventMouse::MouseEventType eventType, cocos2d::Event* event, JS::MutableHandleValue jsvalRet);
 
-    bool handleKeybardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
+    bool handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
     bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
 
     void restartVM();
@@ -633,7 +634,7 @@ JSObject* jsb_ref_autoreleased_create_jsobject(JSContext *cx, cocos2d::Ref *ref,
 /**
  * It will try to get the associated JSObjct for the native object.
  * The reference created from JSObject to native object is weak because it won't retain it.
- * The behavior is exactly the same with 'jsb_ref_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS desactivated.
+ * The behavior is exactly the same with 'jsb_ref_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS deactivated.
  */
 JSObject* jsb_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 
@@ -655,7 +656,7 @@ JSObject* jsb_ref_autoreleased_get_or_create_jsobject(JSContext *cx, cocos2d::Re
  * It will try to get the associated JSObjct for the native object.
  * If it can't find it, it will create a new one associating it to the native object.
  * The reference created from JSObject to native object is weak because it won't retain it.
- * The behavior is exactly the same with 'jsb_ref_get_or_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS desactivated.
+ * The behavior is exactly the same with 'jsb_ref_get_or_create_jsobject' when CC_ENABLE_GC_FOR_NATIVE_OBJECTS deactivated.
  */
 CC_JS_DLL JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_class_t *typeClass, const char* debug);
 

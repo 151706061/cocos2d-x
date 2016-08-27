@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -129,13 +129,6 @@ protected:
      */
     void removeDelegate(IMEDelegate * delegate);
 
-    /**
-     *@brief Check the Delegate is attached to the IME or not.
-     *@param delegate A instance implements IMEDelegate delegate.
-     *@return If the delegate is attached to the IME return true, otherwise false.
-     */
-    bool isAttachedWithIME(IMEDelegate * delegate);
-	
 private:
     IMEDispatcher();
     

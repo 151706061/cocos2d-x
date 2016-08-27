@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,10 +26,11 @@ THE SOFTWARE.
 #define __CCSGUIREADER_H__
 
 #include "ui/UILayout.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "WidgetReader/WidgetReaderProtocol.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h"
 #include "base/ObjectFactory.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "base/CCValue.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace protocolbuffers
 {

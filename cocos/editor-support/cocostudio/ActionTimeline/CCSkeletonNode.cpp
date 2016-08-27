@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCSkeletonNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCSkeletonNode.h"
 
 #include "base/CCDirector.h"
 #include "math/TransformUtils.h"
@@ -363,7 +363,7 @@ void SkeletonNode::updateOrderedAllbones()
 
 void SkeletonNode::sortOrderedAllBones()
 {
-    std::sort(_subOrderedAllBones.begin(), _subOrderedAllBones.end(), cocos2d::nodeComparisonLess);
+    sortNodes(this->_subOrderedAllBones);
 }
 
 NS_TIMELINE_END

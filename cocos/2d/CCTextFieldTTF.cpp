@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,7 +34,7 @@ NS_CC_BEGIN
 
 #define CURSOR_TIME_SHOW_HIDE 0.5f
 #define CURSOR_DEFAULT_CHAR '|'
-
+#define PASSWORD_STYLE_TEXT_DEFAULT "\xe2\x80\xa2"
 static int _calcCharCount(const char * text)
 {
     int n = 0;
@@ -63,6 +63,7 @@ TextFieldTTF::TextFieldTTF()
 , _placeHolder("")   // prevent Label initWithString assertion
 , _colorText(Color4B::WHITE)
 , _secureTextEntry(false)
+, _passwordStyleText(PASSWORD_STYLE_TEXT_DEFAULT)
 , _cursorEnabled(false)
 , _cursorPosition(0)
 , _cursorChar(CURSOR_DEFAULT_CHAR)
@@ -133,7 +134,7 @@ bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std
         // If fontName is ttf file and it corrected, use TTFConfig
         if (FileUtils::getInstance()->isFileExist(fontName))
         {
-            TTFConfig ttfConfig(fontName.c_str(), fontSize, GlyphCollection::DYNAMIC);
+            TTFConfig ttfConfig(fontName, fontSize, GlyphCollection::DYNAMIC);
             if (setTTFConfig(ttfConfig))
             {
                 break;
@@ -336,7 +337,7 @@ void TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
     if (_cursorEnabled && cursorPosition <= (std::size_t)_charCount)
     {
         _cursorPosition = cursorPosition;
-        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE*2.0;
+        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE * 2.0f;
     }
 }
 
@@ -421,7 +422,7 @@ void TextFieldTTF::update(float delta)
             _cursorShowingTime = CURSOR_TIME_SHOW_HIDE;
         }
         // before cursor inserted '\b', need next letter
-        auto sprite = getLetter(_cursorPosition + 1);
+        auto sprite = getLetter((int)_cursorPosition + 1);
 
         if (sprite)
         {
@@ -471,7 +472,6 @@ void TextFieldTTF::setColorSpaceHolder(const Color4B& color)
 // input text property
 void TextFieldTTF::setString(const std::string &text)
 {
-    static char bulletString[] = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
     std::string displayText;
 
     int charCount = 0;
@@ -486,7 +486,7 @@ void TextFieldTTF::setString(const std::string &text)
             size_t length = charCount;
             while (length)
             {
-                displayText.append(bulletString);
+                displayText.append(_passwordStyleText);
                 --length;
             }
         }
@@ -522,6 +522,8 @@ void TextFieldTTF::setString(const std::string &text)
     }
     _charCount = charCount;
 }
+
+
 
 void TextFieldTTF::appendString(const std::string& text)
 {
@@ -683,7 +685,25 @@ void TextFieldTTF::setSecureTextEntry(bool value)
     }
 }
 
-bool TextFieldTTF::isSecureTextEntry()
+void TextFieldTTF::setPasswordTextStyle(const std::string &text)
+{
+    if (text.length() < 1)
+    {
+        return;
+    }
+
+    if (text != _passwordStyleText) {
+        _passwordStyleText = text;
+        setString(_inputText);
+    }
+}
+
+const std::string& TextFieldTTF::getPasswordTextStyle() const
+{
+    return _passwordStyleText;
+}
+
+bool TextFieldTTF::isSecureTextEntry() const
 {
     return _secureTextEntry;
 }

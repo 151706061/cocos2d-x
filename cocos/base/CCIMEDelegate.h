@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010 cocos2d-x.org
-Copyright (C) 2013-2014 Chukong Technologies Inc.
+Copyright (C) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -78,13 +78,6 @@ public:
      * @lua NA
      */
     virtual bool detachWithIME();
-
-    /**
-     * Check whether the IME is attached or not.
-     * @js NA
-     * @lua NA
-     */
-    virtual bool isAttachedWithIME();
 
 protected:
     friend class IMEDispatcher;

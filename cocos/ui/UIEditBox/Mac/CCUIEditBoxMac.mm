@@ -23,11 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIEditBoxMac.h"
+#import "ui/UIEditBox/Mac/CCUIEditBoxMac.h"
 #include "base/CCDirector.h"
-#include "CCUISingleLineTextField.h"
-#include "CCUIPasswordTextField.h"
-#include "CCUIMultilineTextField.h"
+#include "ui/UIEditBox/Mac/CCUISingleLineTextField.h"
+#include "ui/UIEditBox/Mac/CCUIPasswordTextField.h"
+#include "ui/UIEditBox/Mac/CCUIMultilineTextField.h"
 
 #define getEditBoxImplMac() ((cocos2d::ui::EditBoxImplMac *)_editBox)
 
@@ -44,7 +44,7 @@
         self.frameRect = frameRect;
         
         self.editBox = editBox;
-        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS;
+        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS;
         self.keyboardReturnType = cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT;
         
         [self createMultiLineTextField];
@@ -242,6 +242,9 @@
             break;
         case cocos2d::ui::EditBox::InputFlag::SENSITIVE:
             CCLOG("SENSITIVE not implemented");
+            break;
+        case cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS:
+            CCLOG("LOWERCASE_ALL_CHARACTERS not implemented");
             break;
         default:
             break;

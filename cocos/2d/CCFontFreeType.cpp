@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "2d/CCFontFreeType.h"
 #include FT_BBOX_H
 #include "edtaa3func.h"
-#include "CCFontAtlas.h"
+#include "2d/CCFontAtlas.h"
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
@@ -85,6 +85,7 @@ void FontFreeType::shutdownFreeType()
     if (_FTInitialized == true)
     {
         FT_Done_FreeType(_FTlibrary);
+        s_cacheFontData.clear();
         _FTInitialized = false;
     }
 }
@@ -315,7 +316,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
         outHeight = _fontRef->glyph->bitmap.rows;
         ret = _fontRef->glyph->bitmap.buffer;
 
-        if (_outlineSize > 0)
+        if (_outlineSize > 0 && outWidth > 0 && outHeight > 0)
         {
             auto copyBitmap = new (std::nothrow) unsigned char[outWidth * outHeight];
             memcpy(copyBitmap,ret,outWidth * outHeight * sizeof(unsigned char));

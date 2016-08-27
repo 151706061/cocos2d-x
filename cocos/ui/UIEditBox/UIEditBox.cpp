@@ -23,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UIEditBox.h"
-#include "UIEditBoxImpl.h"
+#include "ui/UIEditBox/UIEditBox.h"
+#include "ui/UIEditBox/UIEditBoxImpl.h"
 
 NS_CC_BEGIN
 
@@ -36,7 +36,7 @@ EditBox::EditBox(void)
 : _editBoxImpl(nullptr)
 , _delegate(nullptr)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
-, _editBoxInputFlag(EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS)
+, _editBoxInputFlag(EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS)
 , _keyboardReturnType(KeyboardReturnType::DEFAULT)
 , _backgroundSprite(nullptr)
 , _fontSize(-1)
@@ -63,7 +63,7 @@ EditBox::~EditBox(void)
 void EditBox::touchDownAction(Ref *sender, TouchEventType controlEvent)
 {
     if (controlEvent == Widget::TouchEventType::ENDED) {
-        attachWithIME();
+        _editBoxImpl->openKeyboard();
     }
 }
 
@@ -455,7 +455,7 @@ void EditBox::onExit(void)
     if (_editBoxImpl != nullptr)
     {
         // remove system edit control
-        detachWithIME();
+        _editBoxImpl->closeKeyboard();
     }
 }
 
@@ -525,16 +525,6 @@ void EditBox::unregisterScriptEditBoxHandler(void)
     }
 }
 #endif
-
-void EditBox::didAttachWithIME()
-{
-    _editBoxImpl->openKeyboard();
-}
-
-void EditBox::didDetachWithIME()
-{
-    _editBoxImpl->closeKeyboard();
-}
 
 }
 

@@ -2,7 +2,7 @@
  * Created by Rolando Abarca 2012.
  * Copyright (c) 2012 Rolando Abarca. All rights reserved.
  * Copyright (c) 2013 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Heavy based on: https://github.com/funkaster/FakeWebGL/blob/master/FakeWebGL/WebGL/XMLHTTPRequest.h
  *
@@ -32,9 +32,9 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "network/HttpClient.h"
-#include "js_bindings_config.h"
-#include "ScriptingCore.h"
-#include "jsb_helper.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
+#include "scripting/js-bindings/manual/jsb_helper.h"
 
 class MinXmlHttpRequest : public cocos2d::Ref
 {

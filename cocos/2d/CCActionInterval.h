@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -190,8 +190,8 @@ public:
     virtual void update(float t) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    Sequence() {}
-    virtual ~Sequence(void);
+    Sequence();
+    virtual ~Sequence();
 
     /** initializes the action */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
@@ -416,7 +416,7 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    Spawn() {}
+    Spawn();
     virtual ~Spawn();
 
     /** initializes the Spawn action with the 2 actions to spawn */
@@ -767,6 +767,92 @@ CC_CONSTRUCTOR_ACCESS:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(SkewBy);
 };
+
+/** @class ResizeTo
+* @brief Resize a Node object to the final size by modifying it's Size attribute.
+*/
+class  CC_DLL ResizeTo : public ActionInterval 
+{
+public:
+    /**
+    * Creates the action.
+    * @brief Resize a Node object to the final size by modifying it's Size attribute. Works on all nodes where setContentSize is effective. But it's mostly useful for nodes where 9-slice is enabled
+    * @param duration Duration time, in seconds.
+    * @param final_size The target size to reach
+    * @return An autoreleased RotateTo object.
+    */
+    static ResizeTo* create(float duration, const cocos2d::Size& final_size);
+
+    //
+    // Overrides
+    //
+    virtual ResizeTo* clone() const override;
+    void startWithTarget(cocos2d::Node* target) override;
+    void update(float time) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    ResizeTo() {}
+    virtual ~ResizeTo() {}
+    
+    /**
+    * initializes the action
+    * @param duration in seconds
+    * @param final_size in Size type
+    */
+    bool initWithDuration(float duration, const cocos2d::Size& final_size);
+
+protected:
+    cocos2d::Size _initialSize;
+    cocos2d::Size _finalSize;
+    cocos2d::Size _sizeDelta;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ResizeTo);
+};
+
+
+/** @class ResizeBy
+* @brief Resize a Node object by a Size. Works on all nodes where setContentSize is effective. But it's mostly useful for nodes where 9-slice is enabled
+*/
+class CC_DLL ResizeBy : public ActionInterval 
+{
+public:
+    /**
+    * Creates the action.
+    *
+    * @param duration Duration time, in seconds.
+    * @param deltaSize The delta size.
+    * @return An autoreleased ResizeBy object.
+    */
+    static ResizeBy* create(float duration, const cocos2d::Size& deltaSize);
+    
+    //
+    // Overrides
+    //
+    virtual ResizeBy* clone() const override;
+    virtual ResizeBy* reverse(void) const  override;
+    virtual void startWithTarget(Node *target) override;
+    /**
+    * @param time in seconds
+    */
+    virtual void update(float time) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    ResizeBy() {}
+    virtual ~ResizeBy() {}
+    
+    /** initializes the action */
+    bool initWithDuration(float duration, const cocos2d::Size& deltaSize);
+
+protected:
+    cocos2d::Size _sizeDelta;
+    cocos2d::Size _startSize;
+    cocos2d::Size _previousSize;
+
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ResizeBy);
+};
+
 
 /** @class JumpBy
  * @brief Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.

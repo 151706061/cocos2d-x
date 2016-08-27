@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (C) 2013-2014 Chukong Technologies Inc.
+Copyright (C) 2013-2016 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -51,11 +51,6 @@ bool IMEDelegate::attachWithIME()
 bool IMEDelegate::detachWithIME()
 {
     return IMEDispatcher::sharedDispatcher()->detachDelegateWithIME(this);
-}
-
-bool IMEDelegate::isAttachedWithIME()
-{
-    return IMEDispatcher::sharedDispatcher()->isAttachedWithIME(this);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -218,21 +213,6 @@ void IMEDispatcher::removeDelegate(IMEDelegate* delegate)
     } while (0);
 }
 
-bool IMEDispatcher::isAttachedWithIME(IMEDelegate * delegate)
-{
-    bool ret = false;
-    do
-    {
-        CC_BREAK_IF(! delegate || ! _impl);
-		
-        // if pDelegate is not the current delegate attached to IME, return
-        CC_BREAK_IF(_impl->_delegateWithIme != delegate);
-		
-        ret = true;
-    } while (0);
-    return ret;
-}
-
 //////////////////////////////////////////////////////////////////////////
 // dispatch text message
 //////////////////////////////////////////////////////////////////////////
@@ -293,7 +273,7 @@ void IMEDispatcher::dispatchKeyboardWillShow(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * delegate = 0;
+        IMEDelegate * delegate = nullptr;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
@@ -310,7 +290,7 @@ void IMEDispatcher::dispatchKeyboardDidShow(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * delegate = 0;
+        IMEDelegate * delegate = nullptr;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
@@ -327,7 +307,7 @@ void IMEDispatcher::dispatchKeyboardWillHide(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * delegate = 0;
+        IMEDelegate * delegate = nullptr;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {
@@ -344,7 +324,7 @@ void IMEDispatcher::dispatchKeyboardDidHide(IMEKeyboardNotificationInfo& info)
 {
     if (_impl)
     {
-        IMEDelegate * delegate = 0;
+        IMEDelegate * delegate = nullptr;
         DelegateIter last = _impl->_delegateList.end();
         for (DelegateIter first = _impl->_delegateList.begin(); first != last; ++first)
         {

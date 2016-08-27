@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012      cocos2d-x.org
-Copyright (c) 2013-2015 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,7 +29,7 @@ THE SOFTWARE.
 
 #include "base/uthash.h"
 #include "base/CCRef.h"
-#include "CCArray.h"
+#include "deprecated/CCArray.h"
 #include "deprecated/CCString.h"
 
 NS_CC_BEGIN
@@ -420,7 +420,7 @@ public:
      *  @js NA
      *  @lua NA
      */
-    virtual __Dictionary* clone() const;
+    virtual __Dictionary* clone() const override;
     
 private:
     /** 

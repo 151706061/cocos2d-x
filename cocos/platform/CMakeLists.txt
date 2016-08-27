@@ -26,6 +26,7 @@ if(WINDOWS)
 
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/win32/CCStdC-win32.cpp
+  platform/win32/CCUtils-win32.cpp
   platform/win32/CCFileUtils-win32.cpp
   platform/win32/CCCommon-win32.cpp
   platform/win32/CCApplication-win32.cpp
@@ -65,10 +66,6 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
 
 elseif(ANDROID)
 
-  include_directories(
-    platform/android
-  )
-
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/CCApplication-android.cpp
   platform/android/CCCommon-android.cpp
@@ -86,19 +83,23 @@ set(COCOS2DX_ANDROID_STATIC
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
-  
+
 )
 
 add_library(cocos2dxandroid_static STATIC ${COCOS2DX_ANDROID_STATIC})
 set_property(TARGET cocos2dxandroid_static PROPERTY POSITION_INDEPENDENT_CODE TRUE)
+set_target_properties(cocos2dxandroid_static
+  PROPERTIES
+  ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+  LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+  VERSION "${COCOS2D_X_VERSION}"
+)
 
 endif()
 
 #leave andatory external stuff here also
 
 include_directories(
-  platform/desktop
-  platform
   ../external/ConvertUTF
   ../external/edtaa3func
   ../external/poly2tri

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -26,13 +26,13 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
-#import "CCDirectorCaller-ios.h"
+#import "platform/ios/CCDirectorCaller-ios.h"
 
 #import <Foundation/Foundation.h>
 #import <OpenGLES/EAGL.h>
 
 #import "base/CCDirector.h"
-#import "CCEAGLView-ios.h"
+#import "platform/ios/CCEAGLView-ios.h"
 
 static id s_sharedDirectorCaller;
 

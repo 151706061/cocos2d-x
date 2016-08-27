@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIEditBoxIOS.h"
-#import "CCUISingleLineTextField.h"
-#import "CCUIMultilineTextField.h"
+#import "ui/UIEditBox/iOS/CCUIEditBoxIOS.h"
+#import "ui/UIEditBox/iOS/CCUISingleLineTextField.h"
+#import "ui/UIEditBox/iOS/CCUIMultilineTextField.h"
 
 #import "platform/ios/CCEAGLView-ios.h"
 #include "base/CCDirector.h"
@@ -57,7 +57,7 @@
         _editState = NO;
         self.frameRect = frameRect;
         self.editBox = editBox;
-        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS;
+        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS;
         self.keyboardReturnType = cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT;
         
         [self createMultiLineTextField];
@@ -204,6 +204,10 @@
             
         case cocos2d::ui::EditBox::InputFlag::SENSITIVE:
             self.textInput.autocorrectionType = UITextAutocorrectionTypeNo;
+            break;
+            
+        case cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS:
+            self.textInput.autocapitalizationType = UITextAutocapitalizationTypeNone;
             break;
             
         default:

@@ -28,8 +28,8 @@
 #define __UIEditBoxIMPLICOMMON_H__
 
 #include "platform/CCPlatformConfig.h"
-
-#include "UIEditBoxImpl.h"
+#include "ui/UIEditBox/UIEditBoxImpl-common.h"
+#include "ui/UIEditBox/UIEditBoxImpl.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +37,7 @@ namespace ui {
 
 class EditBox;
 
-class EditBoxImplCommon : public EditBoxImpl
+class CC_GUI_DLL EditBoxImplCommon : public EditBoxImpl
 {
 public:
     /**

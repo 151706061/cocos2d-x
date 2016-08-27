@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,13 @@
 #define __js_bindings_chipmunk_manual
 
 #include "jsapi.h"
-#include "js_bindings_config.h"
-#include "js_manual_conversions.h"
-#include "ScriptingCore.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_manual_conversions.h"
+#include "scripting/js-bindings/manual/ScriptingCore.h"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
 #include "chipmunk/chipmunk_private.h"
-#include "js_bindings_chipmunk_auto_classes.h"
+#include "scripting/js-bindings/auto/js_bindings_chipmunk_auto_classes.h"
 
 // Free Functions
 bool JSB_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
